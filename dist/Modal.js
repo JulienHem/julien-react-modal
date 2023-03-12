@@ -7,6 +7,15 @@ export function Modal({ title, transitionTime = '0', children, btnContent, isOpe
         if (isOpen)
             setIsModalOpen(isOpen);
     }, [isOpen]);
+    useEffect(() => {
+        function handleEscapeKey(event) {
+            if (event.code === 'Escape') {
+                setIsModalOpen(false);
+            }
+        }
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => document.removeEventListener('keydown', handleEscapeKey);
+    }, []);
     return (React.createElement(React.Fragment, null,
         btnContent && React.createElement("button", { onClick: () => setIsModalOpen(true) }, btnContent),
         React.createElement("div", { className: 'background', style: {

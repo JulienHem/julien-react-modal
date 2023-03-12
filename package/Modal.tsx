@@ -17,7 +17,19 @@ export function Modal({ title, transitionTime = '0', children, btnContent, isOpe
 
     useEffect(() => {
         if(isOpen) setIsModalOpen(isOpen)
+
     }, [isOpen])
+
+    useEffect(() => {
+        function handleEscapeKey(event: KeyboardEvent) {
+            if (event.code === 'Escape') {
+                setIsModalOpen(false)
+            }
+        }
+
+        document.addEventListener('keydown', handleEscapeKey)
+        return () => document.removeEventListener('keydown', handleEscapeKey)
+    }, [])
 
     return (
         <>
